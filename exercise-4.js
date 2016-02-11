@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
   database : 'addressbook'
 });
 
-connection.query("select Account.id as accountId, Account.email as accountEmail, AddressBook.name as addressBookName from Account join AddressBook on Account.id=AddressBook.accountId order by accountId", function(err, rows, fields) {
+connection.query("select Account.id as accountId, Account.email as accountEmail, AddressBook.name as addressBookName from Account left join AddressBook on Account.id=AddressBook.accountId order by accountId", function(err, rows, fields) {
   // In this callback, rows will be all the rows of the query, in a regular array of regular objects
   // fields is not used very often, but it will contain a listing of the columns with some metadata
   if (err) {
@@ -60,15 +60,22 @@ connection.query("select Account.id as accountId, Account.email as accountEmail,
   // #2: abc@def.com
   // #5: xx@yy.com
   
+  // console.log(JSON.stringify(accounts, null, 3));
 
   accounts.forEach(function(potato){
     
     console.log(colors.bold.red('#' + potato.accountId + ' ' + potato.accountEmail));
-                  
+    
     potato.addressBooks.forEach(function(tomato){
       
-                    console.log(colors.green('     ' + tomato.addressBookName));
+                    if (tomato.addressBookName !== null){
                     
+                    console.log(colors.green('     ' + tomato.addressBookName));
+                    }
+                    
+                    else {
+                      console.log("-- No address book --");
+                    }
                   });
   });
   
