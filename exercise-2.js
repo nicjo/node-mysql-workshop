@@ -17,7 +17,7 @@ connection.query("select Account.id, Account.email from Account limit 5", functi
     
     for (var i = 0; i < rows.length; i++) {
       
-      console.log("#" + colors.bold(rows[i].id) + " " + rows[i].email);
+      console.log("#" + colors.bold(rows[i].id) + ": " + rows[i].email);
     }
     
   }
